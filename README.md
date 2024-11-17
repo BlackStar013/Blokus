@@ -18,18 +18,17 @@ Bienvenue dans le projet **PPII - Semestre S5**. Ce projet est réalisé dans le
 ## Membres du groupe
 Veuillez compléter cette section avec les noms des membres du groupe :
 
-- **Nom Prénom 1** - [email@example.com](mailto:email@example.com)
-- **Nom Prénom 2** - [email@example.com](mailto:email@example.com)
-- **Nom Prénom 3** - [email@example.com](mailto:email@example.com)
-- **Nom Prénom 4** - [email@example.com](mailto:email@example.com)
-- ...
+- **BUE Ibrahim** - [email@example.com](mailto:email@example.com)
+- **GAIFFE Félix** - [email@example.com](mailto:email@example.com)
+- **MIRWASSER Nina** - [email@example.com](mailto:email@example.com)
+- **MISCHLER Mathurin** - [mischle19u@telecomnancy.eu](mailto:mischle19u@telecomnancy.eu)
 
 
 ## Description du projet
 
 Ajoutez ici une description du projet, ses objectifs, et toute autre information pertinente :
 
-- **Sujet :** 
+- **Sujet : Développement d'une application web pour le jeu Blokus avec IA** 
 - **Objectifs :**
 - **Technologies utilisées :**
 
