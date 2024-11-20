@@ -19,7 +19,7 @@ Bienvenue dans le projet **PPII - Semestre S5**. Ce projet est réalisé dans le
 Veuillez compléter cette section avec les noms des membres du groupe :
 
 - **BUE Ibrahim** - [email@example.com](mailto:email@example.com)
-- **GAIFFE Félix** - [email@example.com](mailto:email@example.com)
+- **GAIFFE Félix** - [felix.gaiffe@telecomnancy.eu](felix.gaiffe@telecomnancy.eu)
 - **MIRWASSER Nina** - [email@example.com](mailto:email@example.com)
 - **MISCHLER Mathurin** - [mischle19u@telecomnancy.eu](mailto:mischle19u@telecomnancy.eu)
 
