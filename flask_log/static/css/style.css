@@ -1,0 +1,54 @@
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place l'image en arrière-plan */
+    filter: blur(8px); /* Applique l'effet de flou */
+    background-size: cover; /* Couvre toute la page */
+    background-position: center;
+}
+
+/* Conteneur principal pour garder le contenu lisible */
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /*centre le contenu horizontalement*/
+    justify-content: center; /* Centrer le contenu verticalement */
+    height: 100vh; /* Même hauteur que le fond */
+    position: relative; /* Assure que ce contenu est au-dessus */
+    z-index: 1; /* Au-dessus du fond */
+    color: white; /* Texte en blanc pour lisibilité */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Optionnel pour améliorer la lisibilité */
+}
+
+.image_logo {
+    width: 400px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+/* Boutons */
+.bouton-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.bouton-center button {
+    width: 150px;
+    height: 50px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgba(6, 9, 11, 0.9); /* Bouton semi-transparent */
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.bouton-center button:hover {
+    background-color: rgba(36, 38, 170, 0.9); /* pour que le bouton soit de couleur différente quand on appuie dessus */
+}
