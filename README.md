@@ -20,7 +20,7 @@ Veuillez compléter cette section avec les noms des membres du groupe :
 
 - **BUE Ibrahim** - [ibrahim.bue@telecomnancy.eu](ibrahim.bue@telecomnancy.eu)
 - **GAIFFE Félix** - [felix.gaiffe@telecomnancy.eu](felix.gaiffe@telecomnancy.eu)
-- **MIRWASSER Nina** - [email@example.com](mailto:email@example.com)
+- **MIRWASSER Nina** - [nina.mirwasser@telecomnancy.eu](nina.mirwasser@telecomnancy.eu)
 - **MISCHLER Mathurin** - [mischle19u@telecomnancy.eu](mailto:mischle19u@telecomnancy.eu)
 
 
