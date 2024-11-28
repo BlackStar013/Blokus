@@ -1,36 +1,4 @@
-
 from classes import *
-
-# initialisation : 
-#plateau = [ [0 for i in range(20)]for i in range(20) ]
-#num_coup = 0
-
-"""
-# liste des 21 pieces, 1 pour la pièce, et -1 pour les cases qu'elle interdit
-p0 = [[0,-1,0], [-1,1,-1], [0,-1,0]]
-p1 = [[0,0,0,0,0], [0,0,-1,-1,0], [0,-1,1,1,-1], [0,0,-1,-1,0], [0,0,0,0,0]]
-p2 = [[0,0,0,0,0], [0,0,-1,-1,0], [0,-1,1,1,-1], [0,0,-1,1,-1], [0,0,0,-1,0]]
-p3 = [[0,0,0,0,0], [0,-1,-1,-1,0], [-1,1,1,1,-1], [0,-1,-1,-1,0], [0,0,0,0,0]]
-p4 = [[0,0,0,0,0], [0,0,-1,-1,0], [0,-1,1,1,-1], [0,-1,1,1,-1], [0,0,-1,-1, 0]]
-p5 = [[0,0,-1,0,0], [0,-1,1,-1,0], [-1,1,1,1,-1], [0,-1,-1,-1,0], [0,0,0,0,0]]
-p6 = [[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,-1,-1,-1,-1,0], [0,-1,1,1,1,1,-1], [0,0,-1,-1,-1,-1,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
-p7 = [[0,0,0,-1,0], [0,-1,-1,1,-1], [-1,1,1,1,-1], [0,-1,-1,-1,0], [0,0,0,0,0]]
-p8 = [[0,0,0,0,0], [0,0,-1,-1,0], [0,-1,1,1,-1], [-1,1,1,-1,0], [0,-1,-1,0,0]]
-p9 = [[0,0,0,0,0,0,0], [0,0,-1,0,0,0,0], [0,-1,1,-1,-1,-1,0], [0,-1,1,1,1,1,-1], [0,0,-1,-1,-1,-1,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
-p10 = [[0,0,-1,0,0], [0,-1,1,-1,0], [0,-1,1,-1,0], [-1,1,1,1,-1], [0,-1,-1,-1,0]]
-p11 = [[0,0,0,-1,0,0,0], [0,0,-1,1,-1,0,0], [0,0,-1,1,-1,-1,0], [0,0,-1,1,1,1,-1], [0,0,0,-1,-1,-1,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
-p12 = [[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,-1,-1,-1,0], [0,0,-1,1,1,1,-1], [0,-1,1,1,-1,-1,0], [0,0,-1,-1,0,0,0], [0,0,0,0,0,0,0]]
-p13 = [[0,0,0,-1,0], [0,-1,-1,1,-1], [-1,1,1,1,-1], [-1,1,-1,-1,0], [0,-1,0,0,0]]
-p14 = [[0,0,0,-1,0,0,0], [0,0,-1,1,-1,0,0], [0,0,-1,1,-1,0,0], [0,0,-1,1,-1,0,0], [0,0,-1,1,-1,0,0], [0,0,-1,1,-1,0,0], [0,0,0,-1,0,0,0]]
-p15 = [[0,0,-1,0,0], [0,-1,1,-1,0], [0,-1,1,1,-1], [0,-1,1,1,-1], [0,0,-1,-1,0]]
-p16 = [[0,0,-1,-1,0], [0,-1,1,1,-1], [-1,1,1,-1,0], [-1,1,-1,0,0], [0,-1,0,0,0]]
-p17 = [[0,0,-1,-1,0], [0,-1,1,1,-1], [0,-1,1,-1,0], [0,-1,1,1,-1], [0,0,-1,-1,0]]
-p18 = [[0,0,-1,-1,0], [0,-1,1,1,-1], [-1,1,1,-1,0], [0,-1,1,-1,0], [0,0,-1,0,0]]
-p19 = [[0,0,-1,0,0], [0,-1,1,-1,0], [-1,1,1,1,-1], [0,-1,1,-1,0], [0,0,-1,0,0]]
-p20 = [[0,0,0,0,0,0,0], [0,0,0,-1,0,0,0], [0,0,-1,1,-1,-1,0], [0,-1,1,1,1,1,-1], [0,0,-1,-1,-1,-1,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
-liste_pieces = [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
-pieces_joueur = [False for i in range(len(liste_pieces))]     # liste des pieces jouées par le joueur, False = non jouée
-"""
 
 joueur1 = joueur_humain("BlackStar", 1)
 joueur2 = joueur_humain("Tsubaki", 2)
@@ -46,7 +14,8 @@ def affiche_plateau(partie):
 
 
 def int_to_binaire(n):
-    '''transforme le nombre négatif du plateau lié au droit des joueurs d'y jouer en binaire'''
+    '''transforme le nombre négatif du plateau lié au droit des joueurs d'y jouer en binaire
+    on se limite ici volontairement à 4 bits car il n'est pas nécéssaire d'en prendre plus'''
     n = -n
     B = [0, 0, 0, 0]
     for i in range(4):
@@ -58,7 +27,8 @@ def int_to_binaire(n):
 
 
 def ajout_interdit_binaire(n, joueur):
-    '''ajoute un interdit pour un joueur et renvoie le nouveau nombre l'indiquant'''
+    '''ajoute un interdit pour un joueur et renvoie le nouveau nombre l'indiquant
+    si b[0] == 1, le joueur 1 ne peut pas y jouer, si b[0] et b[1] == 1, ni le joueur 1 ni le 2 ne peuvent, ...'''
     nombre = 0
     b = int_to_binaire(n)
     b[joueur.couleur-1] = 1
@@ -66,16 +36,15 @@ def ajout_interdit_binaire(n, joueur):
         nombre += b[i]*2**i
     return -nombre
 
-
 #print("bonjour")
 #print(int_to_binaire(-1))
 #print(ajout_interdit_binaire(-2, joueur1))
 #print("au revoir")
 
 
-#affiche_plateau(plateau)
 def recuperation_case_jouable(joueur):
-    '''on parcourt le plateau, et pour chaque case vide, on regarde si il y a une case en diagonale du joueur'''
+    '''on parcourt le plateau, et pour chaque case vide, on regarde si il y a une case en diagonale au joueur
+    et si on est au 4 premiers coups, on rajoute artificiellement le coin du joueur'''
     liste_case_valide = []
     for i in range(len(partie.plateau)):
         for j in range(len(partie.plateau)):
@@ -108,33 +77,36 @@ def recuperation_case_jouable(joueur):
     return liste_case_valide
 
 #plateau[19][19] = 1
-#plateau[19][18] = -1
+#partie.plateau[3][3] = 1
 #plateau[18][19] = -1
-#print(recuperation_case_jouable(joueur2))
+#print(recuperation_case_jouable(joueur1))
 #affiche_plateau(plateau)
 
+
 def test_ajout_piece(joueur, numpiece, piece, ligne, colonne):     # ligne et colonne sont le centre de la piece nxn
-    """on regarde la piece que l'on veut ajouter ne sort pas du plateau, est sur au moins une case_valide, et n'est pas sur une case invalide"""
+    """on vérifie que la piece que l'on veut ajouter ne sort pas du plateau, est sur au moins une case_valide, 
+    et n'est pas sur une case invalide"""
     if not joueur.pieces_jouees[numpiece]:
         n = len(piece)
-        sur_un_coin = False
+        diagonale_piece = False
         cases_jouable = recuperation_case_jouable(joueur)
         for i in range(n):
             for j in range(n):
                 if piece[i][j] == 1:
                     if (ligne+i-(n//2), colonne+j-(n//2)) in cases_jouable:
-                        sur_un_coin = True
+                        diagonale_piece = True
                     if ligne+i-(n//2) >= 0 and colonne+j-(n//2) >= 0 and ligne+i-(n//2) <= 19 and colonne+j-(n//2) <= 19 and partie.plateau[ligne+i-(n//2)][colonne+j-(n//2)] <= 0 and int_to_binaire(partie.plateau[ligne+i-(n//2)][colonne+j-(n//2)])[joueur.couleur-1] == 0:
                         pass
                     else:
                         return False
-        return sur_un_coin
+        return diagonale_piece
     return False
 
-#print(test_ajout_piece(1, 0, liste_pieces[0], 0, 0))
+#print(test_ajout_piece(joueur1, 0, joueur1.liste_pieces[0], 0, 0))
+
 
 def resolution_coup(joueur, numpiece, piece, ligne, colonne):
-    '''on applique le coup après avoir vérifié qu'il était valide'''
+    '''on applique le coup après avoir vérifié qu'il était valide, et on passe la piece à jouée dans la liste du joueur'''
     if test_ajout_piece(joueur, numpiece, piece, ligne, colonne):
         n = len(piece)
         joueur.pieces_jouees[numpiece] = True
@@ -152,7 +124,8 @@ def resolution_coup(joueur, numpiece, piece, ligne, colonne):
 
 
 def recto_verso(piece):
-    '''renvoie le piece retournée selon une symétrie axiale verticale, genre la piece ne change pas; mais la 2 oui, elle est tournée vers l'autre côté'''
+    '''renvoie le piece retournée selon une symétrie axiale verticale, genre la piece 5 ne change pas
+    mais la 2 oui, elle est tournée vers l'autre côté'''
     #piece = liste_pieces[numpiece]
     nouvelle_piece = [[0 for i in range(len(piece))]for i in range(len(piece))]
     for i in range(len(piece)):
@@ -161,9 +134,10 @@ def recto_verso(piece):
     return nouvelle_piece
 
 #print(liste_pieces[11])
-#print(recto_verso(liste_pieces[11]))
+#print(recto_verso(joueur3.liste_pieces[15]))
 #resolution_coup(1, 18, recto_verso(liste_pieces[18]), 17, 18)
 #affiche_plateau(plateau)
+
 
 def rotation_horraire_piece(piece):
     '''pivote la piece de 90 degrés dans le sens horraire'''
@@ -175,7 +149,7 @@ def rotation_horraire_piece(piece):
     return nouvelle_piece
 
 #print(liste_pieces[11])
-#print(rotation_horraire_piece(liste_pieces[11]))
+#print(rotation_horraire_piece(joueur2.liste_pieces[10]))
 #resolution_coup(1, 18, rotation_horraire_piece(liste_pieces[18]), 17, 17)
 #affiche_plateau(plateau)
 
@@ -190,19 +164,23 @@ def rotation_antihorraire_piece(piece):
     return nouvelle_piece
 '''
 
+
 def compter_points(joueur):
     '''compte les points du joueurs selon les pieces qu'il lui reste'''
     points = 0
     for piece in range(len(joueur.liste_pieces)):
-        if not joueur.liste_pieces[piece]:
+        if not joueur.pieces_jouees[piece]:
             for i in range(len(joueur.liste_pieces[piece])):
                 for j in range(len(joueur.liste_pieces[piece])):
                     if joueur.liste_pieces[piece][i][j] == 1:
                         points += joueur.liste_pieces[piece][i][j]
     return points
 
-#print(compter_points(pieces_joueur))
+#print(compter_points(joueur1))
 
+
+# simulation de partie pour vérifier que les interdictions de jouer entre les joueurs ne créent pas de conflits
+'''
 resolution_coup(joueur1, 0, joueur1.liste_pieces[0], 0, 0)
 #affiche_plateau(partie)
 #print(partie.num_coup)
@@ -228,3 +206,4 @@ affiche_plateau(partie)
 print("----------------------")
 resolution_coup(joueur1, 12, joueur1.liste_pieces[12], 0, 13)
 affiche_plateau(partie)
+'''
