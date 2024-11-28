@@ -1,10 +1,9 @@
 class joueur_humain:
     
     def __init__(self, pseudo, couleur):
-        '''ajoute un joueur humain'''
+        '''ajoute un joueur humain, avec un attribut pseudo, couleur, les pieces qu'il a joué, et sa liste de pieces générale'''
         print("ajout d'un joueur humain")
         self.nom = pseudo
-        self.liste_pieces = []
         self.couleur = couleur
         self.pieces_jouees = [False for i in range(21)]
         self.liste_pieces = [ [[0,-1,0], [-1,1,-1], [0,-1,0]],
@@ -34,7 +33,7 @@ class joueur_humain:
 class joueur_IA:
     
     def __init__(self, nom, couleur):
-        '''ajoute un joueur IA'''
+        '''ajoute un joueur IA avec ses attributs nom, couleur, les pieces qu'il a joué, et sa liste de pieces générale'''
         print("ajout d'un joueur IA")
         self.nom = nom
         self.couleur = couleur
@@ -65,7 +64,7 @@ class joueur_IA:
 class partie:
 
     def __init__(self, idpartie, date_debut, heure_debut, joueur1, joueur2, joueur3, joueur4, terminee):
-        '''créer une nouvelle partie'''
+        '''créer une nouvelle partie avec une id unique, une date et une heure, les 4 joueurs avec None si non renseigné, un plateau vide, et un nombre de coup joué'''
         print("création d'une nouvelle partie")
         self.idpartie = idpartie
         self.date_debut = date_debut
