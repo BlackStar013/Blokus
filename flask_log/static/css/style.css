@@ -12,8 +12,8 @@
 
 /* Conteneur principal pour garder le contenu lisible */
 .center {
-    display: flex;
-    flex-direction: column;
+    display: flex; /* les commandes suivantes portent sur le type d'affichage intérieur */
+    flex-direction: column; /* les lignes de texte sont empilées */
     align-items: center; /*centre le contenu horizontalement*/
     justify-content: center; /* Centrer le contenu verticalement */
     height: 100vh; /* Même hauteur que le fond */
@@ -51,4 +51,34 @@
 
 .bouton-center button:hover {
     background-color: rgba(36, 38, 170, 0.9); /* pour que le bouton soit de couleur différente quand on appuie dessus */
+}
+
+.plateau_jeu{
+    display: block;
+    margin: auto;
+    width: 90vmin;
+    height: auto;
+    max-width: 100%; 
+    max-height: 100%;
+    z-index: 1; /* Au-dessus du fond */
+}
+
+.background-image2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place l'image en arrière-plan */
+    background-size: cover; /* Couvre toute la page */
+    background-position: center;
+}
+
+.case{
+    fill: WhiteSmoke;
+    stroke: grey;
+}
+
+.case:hover {
+    fill: Gainsboro; 
 }
