@@ -40,6 +40,25 @@ def home_after_login():
         else:
             return render_template('login.html')
 
+@app.route("/sign_in")
+def sign_in():
+    return render_template("sign_in.html")
+
+@app.route("/sign_in", methods=['GET', 'POST'])
+def sign_in2():
+    username = request.form["pseudo"]
+    password = request.form["mdp"]
+    connection = get_db_connection()
+    profil = connection.execute("SELECT pseudo, mot_de_passe FROM utilisateur WHERE pseudo = ?", (username,)).fetchone()
+    connection.close()
+    if request.method == 'POST':
+        if username and password :
+            if not db.execute("SELECT pseudo FROM utilisateur WHERE pseudo=?;", username):
+                db.execute("INSERT INTO utilisateur (pseudo, password) VALUES (?, ?);", username, password)
+                return render_template("login.html")
+            else :
+                return "Pseudo déjà utilisé"
+    return render_template("sign_in.html")
 
 
 
