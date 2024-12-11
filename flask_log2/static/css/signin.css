@@ -1,0 +1,89 @@
+/* Image de fond floutée */
+.background-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../vraifond.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+/* Conteneur principal */
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+}
+
+/* Logo */
+.image_logo {
+    width: 400px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+/* Conteneur du formulaire */
+.form-wrapper {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    text-align: center;
+    color: white;
+    background-color: rgba(6, 9, 11, 0.9);
+}
+
+/* Formulaire */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Labels */
+form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+/* Champs de saisie */
+form input[type="text"], form input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Bouton de soumission */
+.button-wrapper {
+    margin-top: 20px;
+}
+
+form input[type="submit"] {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    background-color: #2d62bf;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #e71212;
+}

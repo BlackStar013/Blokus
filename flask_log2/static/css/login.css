@@ -1,0 +1,89 @@
+/* Image de fond floutée */
+.background-blur {
+    position: fixed; /* Fixe l'image en arrière-plan */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../vraifond.png'); /* Chemin de l'image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px); /* Applique le flou */
+    z-index: -1; /* Place derrière le contenu principal */
+}
+
+/* Conteneur principal */
+.center {
+    display: flex; /* Centre le contenu verticalement et horizontalement */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+}
+
+/* Logo */
+.image_logo {
+    width: 400px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+/* Conteneur du cadre noir */
+.form-wrapper {
+    background-color: rgba(0, 0, 0, 0.9); /* Fond noir légèrement transparent */
+    padding: 40px;
+    border-radius: 50px; /* Coins arrondis */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre pour effet de relief */
+    width: 400px; /* Largeur du cadre */
+    text-align: center;
+    color: white; /* Texte blanc */
+    background-color: rgba(6, 9, 11, 0.9);
+}
+
+/* Formulaire - Aligne les champs verticalement */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacement entre les champs */
+}
+
+/* Labels */
+form label {
+    display: block; /* Affiche les labels au-dessus des champs */
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: white; /* Couleur des labels en blanc */
+}
+
+/* Champs de saisie */
+form input[type="text"], form input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* S'assure que les champs occupent toute la largeur disponible */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
+
+/* Bouton de soumission */
+.button-wrapper {
+    margin-top: 20px; /* Espace entre les champs et le bouton */
+}
+
+form input[type="submit"] {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    background-color: #124eb5; /* Couleur du bouton */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #dc1d13; /* Changement de couleur au survol */
+}
