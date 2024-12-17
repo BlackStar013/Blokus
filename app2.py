@@ -51,13 +51,12 @@ def sign_in2():
     connection = get_db_connection()
     profil = connection.execute("SELECT pseudo, mot_de_passe FROM utilisateur WHERE pseudo = ?", (username,)).fetchone()
     connection.close()
-    if request.method == 'POST':
-        if username and password :
-            if not db.execute("SELECT pseudo FROM utilisateur WHERE pseudo=?;", username):
-                db.execute("INSERT INTO utilisateur (pseudo, password) VALUES (?, ?);", username, password)
-                return render_template("login.html")
-            else :
-                return "Pseudo déjà utilisé"
+    if username and password :
+        if not connection.execute("SELECT pseudo FROM utilisateur WHERE pseudo=?;", username):
+            connection.execute("INSERT INTO utilisateur (pseudo, password) VALUES (?, ?);", username, password)
+            return render_template("login.html")
+        else :
+            return "Pseudo déjà utilisé"
     return render_template("sign_in.html")
 
 
