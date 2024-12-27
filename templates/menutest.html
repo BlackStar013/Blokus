@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script>
+        function dragstart_handler(ev) {
+          // On ajoute l'identifiant de l'élément cible à l'objet de transfert
+          ev.dataTransfer.setData("application/my-app", ev.target.id);
+          ev.dataTransfer.dropEffect = "move";
+        }
+        function dragover_handler(ev) {
+          ev.preventDefault();
+          ev.dataTransfer.dropEffect = "move";
+        }
+        function drop_handler(ev) {
+          ev.preventDefault();
+          // On obtient l'identifiant de la cible et on ajoute l'élément déplacé
+          // au DOM de la cible
+          var data = ev.dataTransfer.getData("application/my-app");
+          ev.target.appendChild(document.getElementById(data));
+        }
+      </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/menu.css">
+    <title>Blokus</title>
+</head>
+<body>
+
+    {%for j in liste_joueur%}
+        {% for pieces in j.liste_pieces%}
+        {% set idpiece = loop.index-1 %}
+            <table id="{{j.nom}}{{loop.index-1}}">
+                {% if not j.pieces_jouees[loop.index-1]%}
+                    {%for row in j.liste_pieces[loop.index-1]%}
+                        {% set ligne = loop.index-1 %}
+                        <tr id = "colonne">
+                            {%for case in row%}
+                                {% set colonne = loop.index-1 %}
+                                {% if ligne==(row|length)//2 and colonne==(row|length)//2 %}
+                                    <td id="{{j.nom}}{{idpiece}}" draggable="true" bgcolor="pink" ondragstart="dragstart_handler(event)" height="15px" width="15px">
+                                    <button hidden>test</button>
+                                    </td>
+                                {%else%}
+                                    {% if case==1 %}
+                                        {%if j.couleur==1%}
+                                            <td id="case" bgcolor="red"></td>
+                                        {%elif j.couleur==2%}
+                                            <td id="case" bgcolor="blue"></td>
+                                        {%elif j.couleur==3%}
+                                            <td id="case" bgcolor="yellow"></td>
+                                        {%elif j.couleur==4%}
+                                            <td id="case" bgcolor="green"></td>
+                                        {%endif%}
+                                    {% else %}
+                                        <td id="case" hidden></td>
+                                    {%endif%}
+                                {%endif%}
+                            {%endfor%}
+                        </tr>
+                    {%endfor%}
+                {%endif%}
+            </table>
+        {%endfor%}
+    {%endfor%}
+    <body>
+        <div class="board"></div>
+        <h1 style="text-align: center;">Plateau de jeu</h1>
+        <table id = "plateau">
+            {% for row in board %}
+            <tr id = "ligne">
+                {% for cell in row %}
+                    {% if cell==1 %}
+                        <td id = "colonne" bgcolor="red"></td>
+                    {% elif cell==2 %}
+                        <td id = "colonne" bgcolor="blue"></td>
+                    {% elif cell==3 %}
+                        <td id = "colonne" bgcolor="yellow"></td>
+                    {% elif cell==4 %}
+                        <td id = "colonne" bgcolor="green"></td>
+                    {% else %}
+                        <td id = "colonne" ondrop="drop_handler(event)" ondragover="dragover_handler(event)"></td>
+                    {%endif%}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <form action="/menu" method="POST">
+            <label for="joueur">Numero du joueur :</label>
+            <input type="text" id="joueur" name="joueur" placeholder="Entrez le numero du joueur" required>
+            
+            <label for="numpiece">Numero de la piece :</label>
+            <input type="numpiece" id="numpiece" name="numpiece" placeholder="Entrez un numero de piece" required>
+            
+            <label for="ligne">Numero de la ligne :</label>
+            <input type="ligne" id="ligne" name="ligne" placeholder="Entrez un numero de ligne" required>
+            
+            <label for="colonne">Numero de la colonne :</label>
+            <input type="colonne" id="colonne" name="colonne" placeholder="Entrez un numero de colonne" required>
+            
+            <div class="button-wrapper">
+                <input type="submit" value="Jouer un coup" class="submit-button">
+            </div>
+        </form>
+    </body>   
+</body>
+</html>
