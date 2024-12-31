@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/menu.css">
+    <title>Blokus</title>
+</head>
+<body>
+    <h1>Blokus</h1>
+    <body>
+        <div class="board"></div>
+        <div class="pièce">la pièce</div>
+        <h1 style="text-align: center;">Plateau de jeu</h1>
+        <table>
+            {% for row in board %}
+            <tr>
+                {% for cell in row %}
+                {% if cell==0 %}
+                <td></td>
+                {%endif%}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </body>   
+</body>
+</html>

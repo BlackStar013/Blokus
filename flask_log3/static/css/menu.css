@@ -1,0 +1,20 @@
+
+table, th {
+    border: 1px solid black;
+    padding: 15px;
+    width: 450px;
+    height: 450px;   
+    margin: auto;
+}
+
+td, tr{
+    border: 1px solid black;
+    width: 5%;
+    height: 5%;
+}
+
+.pièce {
+    background-image: url(../pièce2.PNG);
+    height: 1170px;
+    width: 2532px;
+}
