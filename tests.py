@@ -13,38 +13,38 @@ def test_ajoutInterditBinaire():
 
 
 def test_recuperationCasesjouables():
-    assert recuperation_case_jouable(joueur1) == [(0,0)]
-    assert recuperation_case_jouable(joueur2) == [(0,19)]
-    assert recuperation_case_jouable(joueur3) == [(19,19)]
-    assert recuperation_case_jouable(joueur4) == [(19,0)]
-    partie.plateau[3][3] = 1
-    assert recuperation_case_jouable(joueur1) == [(2,2), (2,4), (4,2), (4,4), (0,0)]
-    partie.plateau[3][3] = 0
+    assert recuperation_case_jouable(p, joueur1) == [(0,0)]
+    assert recuperation_case_jouable(p, joueur2) == [(0,19)]
+    assert recuperation_case_jouable(p, joueur3) == [(19,19)]
+    assert recuperation_case_jouable(p, joueur4) == [(19,0)]
+    p.plateau[3][3] = 1
+    assert recuperation_case_jouable(p, joueur1) == [(2,2), (2,4), (4,2), (4,4), (0,0)]
+    p.plateau[3][3] = 0
 
 
 def test_ajoutPiece():
-    assert test_ajout_piece(joueur1, 0, joueur1.liste_pieces[0], 0, 0) == True
-    assert test_ajout_piece(joueur2, 1, joueur2.liste_pieces[1], 0, 19) == False
-    assert test_ajout_piece(joueur2, 1, rotation_horraire_piece(rotation_horraire_piece(joueur2.liste_pieces[1])), 0, 19) == True
+    assert test_ajout_piece(p, joueur1, 0, joueur1.liste_pieces[0], 0, 0) == True
+    assert test_ajout_piece(p, joueur2, 1, joueur2.liste_pieces[1], 0, 19) == False
+    assert test_ajout_piece(p, joueur2, 1, rotation_horraire_piece(rotation_horraire_piece(joueur2.liste_pieces[1])), 0, 19) == True
 
 
 def test_resolutionCoup():
-    resolution_coup(joueur1, 0, joueur1.liste_pieces[0], 0, 0)
-    assert partie.plateau[0][0] == 1
-    assert partie.plateau[0][1] == -1
-    assert partie.plateau[1][0] == -1
-    assert partie.plateau[1][1] == 0
-    resolution_coup(joueur3, 7, rotation_horraire_piece(joueur3.liste_pieces[7]), 18, 18)
-    assert partie.plateau[19][19] == 3
-    assert partie.plateau[19][18] == 3
-    assert partie.plateau[18][18] == 3
-    assert partie.plateau[17][18] == 3
-    assert partie.plateau[19][17] == -4
-    assert partie.plateau[18][17] == -4
-    assert partie.plateau[18][19] == -4
-    assert partie.plateau[17][17] == -4
-    assert partie.plateau[17][19] == -4
-    assert partie.plateau[16][18] == -4
+    resolution_coup(p, joueur1, 0, joueur1.liste_pieces[0], 0, 0)
+    assert p.plateau[0][0] == 1
+    assert p.plateau[0][1] == -1
+    assert p.plateau[1][0] == -1
+    assert p.plateau[1][1] == 0
+    resolution_coup(p, joueur3, 7, rotation_horraire_piece(joueur3.liste_pieces[7]), 18, 18)
+    assert p.plateau[19][19] == 3
+    assert p.plateau[19][18] == 3
+    assert p.plateau[18][18] == 3
+    assert p.plateau[17][18] == 3
+    assert p.plateau[19][17] == -4
+    assert p.plateau[18][17] == -4
+    assert p.plateau[18][19] == -4
+    assert p.plateau[17][17] == -4
+    assert p.plateau[17][19] == -4
+    assert p.plateau[16][18] == -4
 
 
 def test_rectoVerso():
@@ -59,9 +59,9 @@ def test_rotationHorrairePiece():
 
 def test_compterPoints():
     joueurtest = joueur_humain("je m'en moque", 1)
-    assert compter_points(joueurtest) == 89
+    assert compter_points(p, joueurtest) == 89
     joueurtest.pieces_jouees[3] = True
-    assert compter_points(joueurtest) == 86
+    assert compter_points(p, joueurtest) == 86
 
 
 test_intToBinaire()

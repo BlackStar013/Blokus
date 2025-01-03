@@ -1,10 +1,11 @@
 from classes import *
+import pytest
 
 joueur1 = joueur_humain("BlackStar", 1)
 joueur2 = joueur_humain("Tsubaki", 2)
 joueur3 = joueur_IA("Maka", 3)
 joueur4 = joueur_IA("Soul", 4)
-partie = partie(13, "7janvier", "3hdumat", joueur1, joueur2, joueur3, joueur4, False)
+p = partie(13, "7janvier", "3hdumat", joueur1, joueur2, joueur3, joueur4, False)
 
 
 def affiche_plateau(partie):
@@ -42,7 +43,7 @@ def ajout_interdit_binaire(n, joueur):
 #print("au revoir")
 
 
-def recuperation_case_jouable(joueur):
+def recuperation_case_jouable(partie, joueur):
     '''on parcourt le plateau, et pour chaque case vide, on regarde si il y a une case en diagonale au joueur
     et si on est au 4 premiers coups, on rajoute artificiellement le coin du joueur'''
     liste_case_valide = []
@@ -82,14 +83,14 @@ def recuperation_case_jouable(joueur):
 #print(recuperation_case_jouable(joueur1))
 #affiche_plateau(plateau)
 
-
-def test_ajout_piece(joueur, numpiece, piece, ligne, colonne):     # ligne et colonne sont le centre de la piece nxn
+@pytest.mark.skip(reason="c'est pas une fonction de test unitaire")
+def test_ajout_piece(partie, joueur, numpiece, piece, ligne, colonne):     # ligne et colonne sont le centre de la piece nxn
     """on vérifie que la piece que l'on veut ajouter ne sort pas du plateau, est sur au moins une case_valide, 
     et n'est pas sur une case invalide"""
     if not joueur.pieces_jouees[numpiece]:
         n = len(piece)
         diagonale_piece = False
-        cases_jouable = recuperation_case_jouable(joueur)
+        cases_jouable = recuperation_case_jouable(partie, joueur)
         for i in range(n):
             for j in range(n):
                 if piece[i][j] == 1:
@@ -105,9 +106,9 @@ def test_ajout_piece(joueur, numpiece, piece, ligne, colonne):     # ligne et co
 #print(test_ajout_piece(joueur1, 0, joueur1.liste_pieces[0], 0, 0))
 
 
-def resolution_coup(joueur, numpiece, piece, ligne, colonne):
+def resolution_coup(partie, joueur, numpiece, piece, ligne, colonne):
     '''on applique le coup après avoir vérifié qu'il était valide, et on passe la piece à jouée dans la liste du joueur'''
-    if test_ajout_piece(joueur, numpiece, piece, ligne, colonne):
+    if test_ajout_piece(partie, joueur, numpiece, piece, ligne, colonne):
         n = len(piece)
         joueur.pieces_jouees[numpiece] = True
         partie.num_coup += 1
@@ -165,7 +166,7 @@ def rotation_antihorraire_piece(piece):
 '''
 
 
-def compter_points(joueur):
+def compter_points(partie, joueur):
     '''compte les points du joueurs selon les pieces qu'il lui reste'''
     points = 0
     for piece in range(len(joueur.liste_pieces)):

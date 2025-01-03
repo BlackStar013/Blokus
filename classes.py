@@ -88,3 +88,9 @@ class coup:
         self.piece = piece
         self.position = position
         self.idpartie = id_partie
+
+
+class Blokused(Exception):
+    # erreur lorsque aucun coup n'est valide
+    def __init__(self):
+        super().__init__("Aucun coup n'est valide.")
