@@ -7,7 +7,7 @@
         <table>
             {% for joueur in liste_joueur %}
                 <tr>
-                    <p style="text-align: center;">Le joueur {{joueur.nom}} a obtenu le score de {{score[loop.index-1][1]}} points.</p>
+                    <p style="text-align: center;">Le joueur {{liste_joueur[loop.index-1]}} a obtenu le score de {{score[loop.index-1][1]}} points.</p>
                 </tr>
             {%endfor%}
         </table>
