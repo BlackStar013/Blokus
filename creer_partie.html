@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une partie</title>
+    <link rel="stylesheet" href="../static/css/signin.css">
+</head>
+<body>
+    <!-- Conteneur principal -->
+    <div class="center">
+        <!-- Arrière-plan flouté -->
+        <div class="background-blur"></div>
+        
+        <!-- Logo -->
+        <img src="{{ url_for('static', filename='Blokus.png.tiff') }}" alt="Blokus logo" class="image_logo">
+        
+        <!-- Formulaire de création de compte -->
+        <p>rentrez les informations de la partie, votre pseudo, ceux des 3 autres joueurs, et si humain ou IA, et si moins que 4 joueurs, rentrez Vide et Vide dans les cases supplémentaires</p>
+        <div class="form-wrapper">
+            <form action="/creer_partie" method="POST">
+                <label for="username1">Identifiant :</label>
+                <input type="text" id="username1" name="username1" placeholder="Entrez votre identifiant" required>
+                
+                <label for="username2">Identifiant :</label>
+                <input type="text" id="username2" name="username2" placeholder="Entrez votre identifiant" required>
+                
+                <label for="type2">humain ou robot :</label>
+                <input type="text" id="type2" name="type2" placeholder="Entrez H pour humain, et IA pour IA" required>
+
+                <label for="username3">Identifiant :</label>
+                <input type="text" id="username3" name="username3" placeholder="Entrez votre identifiant" required>
+                
+                <label for="type3">humain ou robot :</label>
+                <input type="text" id="type3" name="type3" placeholder="Entrez H pour humain, et IA pour IA" required>
+
+                <label for="username4">Identifiant :</label>
+                <input type="text" id="username4" name="username4" placeholder="Entrez votre identifiant" required>
+
+                <label for="type4">humain ou robot :</label>
+                <input type="text" id="type4" name="type4" placeholder="Entrez H pour humain, et IA pour IA" required>
+                                
+                <div class="button-wrapper">
+                    <input type="submit" value="Créer une partie" class="submit-button">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
