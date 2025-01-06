@@ -51,11 +51,6 @@ def choisir_coup_aletoire(p : partie, ia : joueur_IA,) -> coup:
     position = (i,j)
     return coup(num_coup, joueur, piece, position, id_partie)
 
-def coup_ia_aleatoire(p : partie, ia : joueur_IA) -> None:
-    coup = choisir_coup_aletoire(p, ia)
-    ligne, colonne = coup.position
-    resolution_coup(p, ia, coup.piece, ligne, colonne)
-
 def distance_bord(i : int, j : int) -> int:
     # donne la distance à la case au bord du plateau la plus proche
     d_i = min(i, 19-i)
@@ -73,6 +68,7 @@ def eval_partie(p : partie, joueur : joueur_humain | joueur_IA) -> int:
     # une case vers le centre est plus intéréssante
     # une case jouable est intéréssante, mais moins qu'une case où on a déjà joué (ici, 2x moins)
     # c'est plus intéressant de maximiser son score que de minimiser le score d'un seul adversaire
+    # (ici, 3x plus, pour obtenir une somme nulle à 4 joueurs si tout le monde a joué de la même façon)
 
     score_case = 20
     score_case_jouable = 10
