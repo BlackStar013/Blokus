@@ -15,8 +15,8 @@
         <table class="historique_parties">
             <tr>
                 <th>Id Partie</th>
-                <th>Date</th>
                 <th>Joueurs</th>
+                <th>nombre de coups</th>                
                 <th>Terminée</th>
                 <th>Voir la partie</th>
             </tr>
@@ -24,8 +24,8 @@
 
                 <tr>
                 <td>{{ e['id_partie'] }}</td>
-                <td>{{ e['debut'] }}</td>
                 <td>{{ e['j1'], e['j2'], e['j3'], e['j4'] }}</td>
+                <td>{{ e['nb_coup'] }}</td>
                 <td>
                     {% if e['terminee'] == 0 %}
                         Non
