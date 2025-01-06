@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <title>
             Rejoindre une partie
         </title>
-        <link rel="stylesheet" href="./style.css">
+        <div class="background-blur"></div>
+
+        <link rel="stylesheet" href="../static/css/signin.css">
     </head>
     <body>
+        <div class="center">
+        <div class="form-wrapper">
+
         <h1 id="Blokus">
             Blokus
         </h1>
@@ -14,12 +19,23 @@
             Rejoindre une partie
         </h2>
         <hr>
-        <br><br>
-        <button class="retour" onclick="window.location.href='./menu_principal.html'">Retour</button>
+        <img src="../static/Blokus.webp" alt="Blokus logo" class="image_logo">
         <p style="text-align: center;">Entrez l'indentifiant d'une partie afin de la rejoindre !</p>
-        <form>
-            <input type="text" name="Identifiant de partie" placeholder="Identifiant de partie">
+        
+        <form form action="/rejoindre_partie" method="post">
+            <label for="identifiantDePartie">Identifiant de la partie :</label>
+            <input type="text" id='identifiantDePartie' name="identifiantDePartie" placeholder="Identifiant de partie">
+
+            <label for="username">Identifiant Joueur :</label>
+            <input type="text" id="username" name="username" placeholder="Entrez votre identifiant" required>
+
+            <div class="button-wrapper">
             <input type="submit" value="Rejoindre">
+            </div>
         </form>
+        <button onclick="window.location.href='{{ url_for('option') }}'" class="button-wrapper">Retour</button>
+
     </body>
+    </div>
+</div>
 </html>
