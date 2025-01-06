@@ -100,7 +100,7 @@ def donnees_joueur_to_joueur(donnes_joueur)-> joueur_IA:
     # donnes_joueur = [id_partie, pseudo, couleur, 21x True | False pour les pièces]
     joueur = joueur_IA(donnes_joueur[1], donnes_joueur[2])
     for i in range(21):
-        if donnes_joueur[i+3] == "0":
+        if donnes_joueur[i+3] == "1":
             joueur.pieces_jouees = True
     return joueur
 

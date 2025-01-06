@@ -91,11 +91,11 @@ def eval_partie(p : partie, joueur : joueur_humain | joueur_IA) -> int:
 
     jouable_j1 = recuperation_case_jouable(p.joueur1.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
     jouable_j2 = recuperation_case_jouable(p.joueur2.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
-    if p.joueur3 == None:
+    if p.joueur3 == "Vide":
         jouable_j3 = []
     else:
         jouable_j3 = recuperation_case_jouable(p.joueur3.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
-    if p.joueur4 == None:
+    if p.joueur4 == "Vide":
         jouable_j4 = []
     else:
         jouable_j4 = recuperation_case_jouable(p.joueur4.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
@@ -124,12 +124,12 @@ def joueur_suivant(p : partie, joueur : joueur_humain | joueur_IA) -> joueur_hum
         case p.joueur1:
             return p.joueur2
         case p.joueur2:
-            if p.joueur3 != None:
+            if p.joueur3 != "Vide":
                 return p.joueur3
             else:
                 return p.joueur1
         case p.joueur3:
-            if p.joueur4 != None:
+            if p.joueur4 != "Vide":
                 return p.joueur4
             else:
                 return p.joueur1
@@ -160,7 +160,7 @@ def couleur_to_joueur(p : partie, c : int) -> joueur_humain | joueur_IA:
 
 def minmax(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, maximiser : bool, joueur_initial : joueur_IA, meilleur_coup : coup) -> tuple[int,coup]:
     if profondeur == 0 or p.terminee:
-        return eval_partie(p,joueur), meilleur_coup
+        return -eval_partie(p,joueur), meilleur_coup
     if maximiser:
         valeur = - float("inf")
         for (i,j) in recuperer_cases_potentielles(p, joueur): # parcourt toutes les possibilités de position
@@ -233,7 +233,7 @@ def choisir_coup_ia_minmax(p : partie, ia : joueur_IA, profondeur : int) -> tupl
 
 def alphabeta(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, maximiser : bool, joueur_initial : joueur_IA, maximiser_avant : bool, meilleur_coup : coup, alpha : int, beta : int) -> tuple[int,coup]:
     if profondeur == 0 or p.terminee:
-        return eval_partie(p,joueur), meilleur_coup
+        return -eval_partie(p,joueur), meilleur_coup
     if maximiser:
         valeur = - float("inf")
         for (i,j) in recuperer_cases_potentielles(p, joueur): # parcourt toutes les possibilités de position
