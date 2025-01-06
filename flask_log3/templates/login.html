@@ -8,13 +8,10 @@
 </head>
 <body>
     <div class="center">
-        <!-- Arrière-plan flouté -->
         <div class="background-blur"></div>
 
-        <!-- Logo -->
         <img src="{{ url_for('static', filename='Blokus.png.tiff') }}" alt="Blokus logo" class="image_logo">
 
-        <!-- Formulaire de connexion -->
         <div class="form-wrapper">
             <form action="/login" method="post">
                 <label for="username">Identifiant Joueur :</label>

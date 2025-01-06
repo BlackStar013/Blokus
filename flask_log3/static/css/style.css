@@ -1,6 +1,6 @@
-/* Conteneur pour l'arrière-plan flouté */
+
 .background-blur {
-    position: fixed; /* Fixe l'image en arrière-plan */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
@@ -9,38 +9,38 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(5px); /* Applique le flou */
-    z-index: -1; /* Place derrière le contenu principal */
+    filter: blur(5px); 
+    z-index: -1; 
 }
 
-/* Styles pour le corps */
+
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Évite les scrollbars */
+    overflow: hidden; 
 }
 
-/* Conteneur principal pour garder le contenu lisible */
+
 .center {
-    display: flex; /* Définit un modèle de boîte flexible */
-    flex-direction: column; /* Les éléments enfants sont empilés verticalement */
-    align-items: center; /* Centre les éléments horizontalement */
-    justify-content: center; /* Centre les éléments verticalement */
-    height: 100vh; /* Prend toute la hauteur de la page */
-    position: relative; /* Place au-dessus de l'arrière-plan flou */
-    z-index: 1; /* S'assure que le contenu est au-dessus */
-    color: white; /* Texte en blanc pour une meilleure lisibilité */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Ajoute une ombre au texte */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center; 
+    height: 100vh;
+    position: relative; 
+    z-index: 1; 
+    color: white; 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
 }
 
-/* Style de l'image logo */
+
 .image_logo {
     width: 400px;
     height: auto;
     margin-bottom: 30px;
 }
 
-/* Conteneur des boutons */
+
 .bouton-center {
     display: flex;
     flex-direction: column;
@@ -48,7 +48,7 @@ body {
     gap: 20px;
 }
 
-/* Styles des boutons */
+
 .bouton-center button {
     width: 150px;
     height: 50px;
@@ -56,16 +56,16 @@ body {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    background-color: rgba(6, 9, 11, 0.9); /* Bouton semi-transparent */
+    background-color: rgba(6, 9, 11, 0.9); 
     color: white;
     transition: background-color 0.3s ease;
 }
 
 .bouton-center button:hover {
-    background-color: rgba(36, 38, 170, 0.9); /* Couleur différente au survol */
+    background-color: rgba(36, 38, 170, 0.9); 
 }
 
-/* Plateau de jeu (si nécessaire dans d'autres pages) */
+
 .plateau_jeu {
     display: block;
     margin: auto;
@@ -73,22 +73,10 @@ body {
     height: auto;
     max-width: 100%; 
     max-height: 100%;
-    z-index: 1; /* S'assure que le plateau est visible */
+    z-index: 1; 
 }
 
-/* Exemple pour un second arrière-plan (si applicable) */
-.background-image2 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Place en arrière-plan */
-    background-size: cover;
-    background-position: center;
-}
 
-/* Styles des cases */
 .case {
     fill: WhiteSmoke;
     stroke: grey;

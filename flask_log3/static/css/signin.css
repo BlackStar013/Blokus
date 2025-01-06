@@ -1,4 +1,4 @@
-/* Image de fond floutée */
+
 .background-blur {
     position: fixed;
     top: 0;
@@ -13,7 +13,7 @@
     z-index: -1;
 }
 
-/* Conteneur principal */
+
 .center {
     display: flex;
     flex-direction: column;
@@ -23,14 +23,14 @@
     position: relative;
 }
 
-/* Logo */
+
 .image_logo {
     width: 400px;
     height: auto;
     margin-bottom: 30px;
 }
 
-/* Conteneur du formulaire */
+
 .form-wrapper {
     background-color: rgba(0, 0, 0, 0.9);
     padding: 40px;
@@ -42,14 +42,14 @@
     background-color: rgba(6, 9, 11, 0.9);
 }
 
-/* Formulaire */
+
 form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-/* Labels */
+
 form label {
     display: block;
     font-size: 14px;
@@ -57,7 +57,7 @@ form label {
     color: white;
 }
 
-/* Champs de saisie */
+
 form input[type="text"], form input[type="password"] {
     padding: 10px;
     font-size: 16px;
@@ -67,7 +67,7 @@ form input[type="text"], form input[type="password"] {
     box-sizing: border-box;
 }
 
-/* Bouton de soumission */
+
 .button-wrapper {
     margin-top: 20px;
 }
