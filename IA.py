@@ -3,7 +3,17 @@ from main import *
 import random as rd
 import copy
 
-def choisir_coup_aletoire(p : partie, ia : joueur_IA,) -> coup:
+"""
+num pièce
+passé ?
+nb rot
+nb sym
+i
+j
+"""
+
+
+def choisir_coup_aletoire_aux(p : partie, ia : joueur_IA,) -> coup:
     # renvoie un coup aléatoire parmis ceux légaux
     id_partie = p.idpartie
     num_coup = p.num_coup
@@ -35,7 +45,7 @@ def choisir_coup_aletoire(p : partie, ia : joueur_IA,) -> coup:
     j = j_initial
 
     # parcourt tous les coups possibles
-    while not test_ajout_piece(p, ia, num_piece, piece, i, j):
+    while not test_ajout_piece(partie_et_joueur_to_donnees_joueur(p, ia), num_piece, piece, i, j, p.plateau, p.num_coup, p.nb_joueur):
         i = (i + i_suivant) % 20
         if i == i_initial: # si on a testé tous les i de cette colonne
             j = (j + j_suivant) % 20
@@ -48,8 +58,14 @@ def choisir_coup_aletoire(p : partie, ia : joueur_IA,) -> coup:
                         if num_piece == num_piece_initial: # si on a testé toutes les pieces
                             raise Blokused
 
-    position = (i,j)
-    return coup(num_coup, joueur, piece, position, id_partie)
+    return coup(num_coup, joueur, num_piece, rotation, symetrie_axiale, piece, i, j, id_partie)
+
+def coup_aleatoire(p : partie, ia : joueur_IA) -> tuple[int, bool, int, int, int, int]:
+    try:
+        c = choisir_coup_aletoire_aux(p, ia)
+        return c.num_piece, False, c.rotation, c.symetrie_axiale, c.i, c.j
+    except Blokused:
+        return -1, True, -1, -1, -1, -1
 
 def distance_bord(i : int, j : int) -> int:
     # donne la distance à la case au bord du plateau la plus proche
@@ -73,16 +89,16 @@ def eval_partie(p : partie, joueur : joueur_humain | joueur_IA) -> int:
     score_case = 20
     score_case_jouable = 10
 
-    jouable_j1 = recuperation_case_jouable(p, p.joueur1)
-    jouable_j2 = recuperation_case_jouable(p, p.joueur2)
+    jouable_j1 = recuperation_case_jouable(p.joueur1.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
+    jouable_j2 = recuperation_case_jouable(p.joueur2.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
     if p.joueur3 == None:
-        jouable_j3 = [(19, 19)]
+        jouable_j3 = []
     else:
-        jouable_j3 = recuperation_case_jouable(p, p.joueur3)
+        jouable_j3 = recuperation_case_jouable(p.joueur3.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
     if p.joueur4 == None:
-        jouable_j4 = [(19, 0)]
+        jouable_j4 = []
     else:
-        jouable_j4 = recuperation_case_jouable(p, p.joueur4)
+        jouable_j4 = recuperation_case_jouable(p.joueur4.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
     jouable = [jouable_j1, jouable_j2, jouable_j3, jouable_j4]
     score = 0
 
@@ -122,7 +138,7 @@ def joueur_suivant(p : partie, joueur : joueur_humain | joueur_IA) -> joueur_hum
 
 def recuperer_cases_potentielles(p : partie, joueur : joueur_humain | joueur_IA) -> dict[tuple[int], None]:
     # renvoie un dictionnaire avec les positions où on peut potentiellement placer une pièce
-    cases_jouables = recuperation_case_jouable(p, joueur)
+    cases_jouables = recuperation_case_jouable(joueur.couleur-1, p.plateau, p.num_coup, p.nb_joueur)
     cases_potentielles = {}
     for (i_cj, j_cj) in cases_jouables:
         for i in range(i_cj-2, i_cj+3):
@@ -162,16 +178,19 @@ def minmax(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, max
                             p2 = copy.deepcopy(p)
                             joueur2 = couleur_to_joueur(p2, joueur.couleur)
                             joueur_initial2 = couleur_to_joueur(p2, joueur_initial.couleur)
-                            if test_ajout_piece(p2, joueur2, i_piece, piece, i, j):
-                                resolution_coup(p2, joueur2, i_piece, piece, i, j)
+                            if test_ajout_piece(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur):
+                                plateaurc, _ = resolution_coup(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur)
+                                p2.plateau = plateaurc
+                                joueur2.pieces_jouees[i_piece] = True
 
+                                
                                 # calcule la valeur du plateau après le coup selon l'algorithme minmax
                                 valeur2, _ = minmax(p2, profondeur - 1, joueur_suivant(p2, joueur2), False, joueur_initial2, meilleur_coup)
 
                                 # garde en mémoire le coup s'il est le meilleur
                                 if valeur <= valeur2:
                                     valeur = valeur2
-                                    meilleur_coup = coup(p.num_coup ,joueur, piece, (i,j), p.idpartie)
+                                    meilleur_coup = coup(p.num_coup ,joueur, i_piece, rotation, symetrie, piece, i, j , p.idpartie)
         return valeur, meilleur_coup
     else:
         valeur = float("inf")
@@ -190,8 +209,10 @@ def minmax(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, max
                             p2 = copy.deepcopy(p)
                             joueur2 = couleur_to_joueur(p2, joueur.couleur)
                             joueur_initial2 = couleur_to_joueur(p2, joueur_initial.couleur)
-                            if test_ajout_piece(p2, joueur2, i_piece, piece, i, j):
-                                resolution_coup(p2, joueur2, i_piece, piece, i, j)
+                            if test_ajout_piece(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur):
+                                plateaurc, _ = resolution_coup(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur)
+                                p2.plateau = plateaurc
+                                joueur2.pieces_jouees[i_piece] = True
 
                                 # calcule la valeur du plateau après le coup selon l'algorithme minmax
                                 js = joueur_suivant(p2, joueur2)
@@ -200,14 +221,15 @@ def minmax(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, max
                                 # garde en mémoire le coup s'il est le pire (le meilleur pour l'adversaire)
                                 if valeur2 <= valeur:
                                     valeur = valeur2
-                                    meilleur_coup = coup(p.num_coup ,joueur, piece, (i,j), p.idpartie)
+                                    meilleur_coup = coup(p.num_coup, joueur, i_piece, rotation, symetrie, piece, i, j , p.idpartie)
         return valeur, meilleur_coup
 
-def choisir_coup_ia_minmax(p : partie, ia : joueur_IA, profondeur : int) -> coup:
-    _, meilleur_coup = minmax(p, profondeur, ia, True, ia, None)
-    if meilleur_coup == None:
-        raise Blokused
-    return meilleur_coup
+def choisir_coup_ia_minmax(p : partie, ia : joueur_IA, profondeur : int) -> tuple[int, bool, int, int, int, int]:
+    _, c = minmax(p, profondeur, ia, True, ia, None)
+    if c == None:
+        return -1, True, -1, -1, -1, -1
+    return c.num_piece, False, c.rotation, c.symetrie_axiale, c.i, c.j
+    
 
 def alphabeta(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, maximiser : bool, joueur_initial : joueur_IA, maximiser_avant : bool, meilleur_coup : coup, alpha : int, beta : int) -> tuple[int,coup]:
     if profondeur == 0 or p.terminee:
@@ -229,8 +251,10 @@ def alphabeta(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, 
                             p2 = copy.deepcopy(p)
                             joueur2 = couleur_to_joueur(p2, joueur.couleur)
                             joueur_initial2 = couleur_to_joueur(p2, joueur_initial.couleur)
-                            if test_ajout_piece(p2, joueur2, i_piece, piece, i, j):
-                                resolution_coup(p2, joueur2, i_piece, piece, i, j)
+                            if test_ajout_piece(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur):
+                                plateaurc, _ = resolution_coup(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur)
+                                p2.plateau = plateaurc
+                                joueur2.pieces_jouees[i_piece] = True
 
                                 # calcule la valeur du plateau après le coup selon l'algorithme minmax
                                 valeur2, _ = alphabeta(p2, profondeur - 1, joueur_suivant(p2, joueur2), False, joueur_initial2, True, meilleur_coup, alpha, beta)
@@ -238,7 +262,7 @@ def alphabeta(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, 
                                 # garde en mémoire le coup s'il est le meilleur
                                 if valeur <= valeur2:
                                     valeur = valeur2
-                                    meilleur_coup = coup(p.num_coup ,joueur, piece, (i,j), p.idpartie)
+                                    meilleur_coup = coup(p.num_coup, joueur, i_piece, rotation, symetrie, piece, i, j, p.idpartie)
 
                                 # élagage beta (si l'adversaire précédent a déjà un autre pire coup)
                                 if valeur > beta:
@@ -262,8 +286,10 @@ def alphabeta(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, 
                             p2 = copy.deepcopy(p)
                             joueur2 = couleur_to_joueur(p2, joueur.couleur)
                             joueur_initial2 = couleur_to_joueur(p2, joueur_initial.couleur)
-                            if test_ajout_piece(p2, joueur2, i_piece, piece, i, j):
-                                resolution_coup(p2, joueur2, i_piece, piece, i, j)
+                            if test_ajout_piece(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur):
+                                plateaurc, _ = resolution_coup(partie_et_joueur_to_donnees_joueur(p2, joueur2), i_piece, piece, i, j, p2.plateau, p2.num_coup, p2.nb_joueur)
+                                p2.plateau = plateaurc
+                                joueur2.pieces_jouees[i_piece] = True
 
                                 # calcule la valeur du plateau après le coup selon l'algorithme minmax
                                 js = joueur_suivant(p2, joueur2)
@@ -272,7 +298,7 @@ def alphabeta(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, 
                                 # garde en mémoire le coup s'il est le pire (le meilleur pour l'adversaire)
                                 if valeur2 <= valeur:
                                     valeur = valeur2
-                                    meilleur_coup = coup(p.num_coup ,joueur, piece, (i,j), p.idpartie)
+                                    meilleur_coup = coup(p.num_coup, joueur, i_piece, rotation, symetrie, piece, i, j, p.idpartie)
                             
                                 if maximiser_avant: # si le joueur précédent ce coup est le joueur dont on cherche le meilleur coup
                                     # élagage alpha (si le joueur a déjà un autre meilleur coup)
@@ -286,8 +312,8 @@ def alphabeta(p : partie, profondeur : int, joueur : joueur_humain | joueur_IA, 
                                     alpha = max(alpha, valeur)
         return valeur, meilleur_coup
 
-def choisir_coup_ia_alphabeta(p : partie, ia : joueur_IA, profondeur : int) -> coup:
-    _, meilleur_coup = alphabeta(p, profondeur, ia, True, ia, False, None, -float("inf"), float("inf"))
-    if meilleur_coup == None:
-        raise Blokused
-    return meilleur_coup
+def choisir_coup_ia_alphabeta(p : partie, ia : joueur_IA, profondeur : int) -> tuple[int, bool, int, int, int, int]:
+    _, c = alphabeta(p, profondeur, ia, True, ia, False, None, -float("inf"), float("inf"))
+    if c == None:
+        return -1, True, -1, -1, -1, -1
+    return c.num_piece, False, c.rotation, c.symetrie_axiale, c.i, c.j
