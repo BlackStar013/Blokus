@@ -2,44 +2,61 @@
 <html>
     <head>
         <title>
-            Historiques des parties
+            Visionnage plateau
         </title>
-        <link rel="stylesheet" href="../static/css/style2.css">
+        <link rel="stylesheet" href="../static/style.css">
     </head>
-    <body>
-        <h1 class="Blokus">
-            Blokus
-        </h1>
-        <h2 style="font-size: 50px; text-align: center; color:blueviolet;"> Historique des parties</h2>
-        <hr>
-        <br><br>
-        <button onclick="window.location.href='{{ url_for('option') }}'" class="retour">Retour menu</button>
-        <table class="historique_parties">
-            <tr>
-                <th>Id Partie</th>
-                <th>Date</th>
-                <th>Joueurs</th>
-                <th>Terminée</th>
-                <th>Voir la partie</th>
-            </tr>
-            {% for e in parties %}
 
-                <tr>
-                <td>{{ e['id_partie'] }}</td>
-                <td>{{ e['debut'] }}</td>
-                <td>{{ e['j1'], e['j2'], e['j3'], e['j4'] }}</td>
-                <td>
-                    {% if e['terminee'] == 0 %}
-                        Non
-                    {% else %}
-                        Oui
-                    {% endif %}
-                </td >
-                <td>
-                    <a href="{{ url_for( 'voir_partie' ,id_partie = e['id_partie'], coup=0 ) }}">Voir la partie</a>
-                </td>
-                </tr>
+    <body>
+        <h1 style="text-align: center;">Plateau de jeu</h1>
+        <table class="board" style="border: 1px solid black;
+        padding: 15px;
+        width: 450px;
+        height: 450px;   
+        margin: auto;">
+            {% for row in board %}
+            <tr class="board" style="border: 1px solid black;
+            width: 5%;
+            height: 5%;">
+                {% for cell in row %}
+            
+                {% if cell==1 or cell=='1' %}
+            
+                <td class="board" bgcolor="red" style="border: 1px solid black; width: 5%; height: 5%;"></td>
+            
+                {% elif cell==2 or cell=='2'%}
+            
+                <td class="board" bgcolor="blue" style="border: 1px solid black; width: 5%; height: 5%;"></td>
+            
+                {% elif cell==3 or cell=='3'%}
+            
+                <td class="board" bgcolor="yellow" style="border: 1px solid black; width: 5%; height: 5%;"></td>
+            
+                {% elif cell==4 or cell=='4'%}
+            
+                <td class="board" bgcolor="green" style="border: 1px solid black; width: 5%; height: 5%;"></td>
+            
+                {% else %}
+            
+                <td class="board" style="border: 1px solid black; width: 5%; height: 5%;"></td>
+                    {%endif%}
+                {% endfor %}
+            </tr>
             {% endfor %}
         </table>
+        {% if num_coup == nb_coup %}
+            <a href="{{ url_for( 'voir_partie' ,id_partie = id_partie, coup=num_coup ) }}">Coup suivant</a>
+        {% else %}
+        <a href="{{ url_for( 'voir_partie' ,id_partie = id_partie, coup=num_coup+1 ) }}">Coup suivant</a>
+        {% endif %}
+
+        {% if num_coup == 0 %}
+            <a href="{{ url_for( 'voir_partie' ,id_partie = id_partie, coup=num_coup ) }}">Coup précédent</a>
+        {% else %}
+        <a href="{{ url_for( 'voir_partie' ,id_partie = id_partie, coup=num_coup-1 ) }}">Coup précédent</a>
+        {% endif %}
+    </body>
+    <body>
+        <button onclick="window.location.href='{{ url_for('historique_partie') }}'" class="historique">Retour</button>
     </body>
 </html>
