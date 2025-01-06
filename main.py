@@ -1,5 +1,6 @@
 from classes import *
 from copy import deepcopy
+import pytest
 
 def int_to_binaire(n):
     '''transforme le nombre négatif du plateau lié au droit des joueurs d'y jouer en binaire
@@ -73,6 +74,7 @@ def recuperation_case_jouable(tour, plateau, num_coup, nb_joueur):
     #print("les cases jouables pour le joueur", joueur , "sont :")
     return liste_case_valide
 
+@pytest.mark.skip(reason="c'est pas une fonction de test unitaire")
 def test_ajout_piece(donnes_joueur, numpiece, piece, ligne, colonne, plateau, num_coup, nb_joueur):     # ligne et colonne sont le centre de la piece nxn
     """on vérifie que la piece que l'on veut ajouter ne sort pas du plateau, est sur au moins une case_valide, 
     et n'est pas sur une case invalide"""
@@ -92,6 +94,20 @@ def test_ajout_piece(donnes_joueur, numpiece, piece, ligne, colonne, plateau, nu
                         return False
         return diagonale_piece
     return False
+
+def donnees_joueur_to_joueur(donnes_joueur)-> joueur_IA:
+    # fait en sorte que les aberrations de Félix soient transformées en classes
+    # donnes_joueur = [id_partie, pseudo, couleur, 21x True | False pour les pièces]
+    joueur = joueur_IA(donnes_joueur[1], int(donnes_joueur[2]))
+    for i in range(21):
+        if donnes_joueur[i+3] == "1":
+            joueur.pieces_jouees[i] = True
+    return joueur
+
+def partie_et_joueur_to_donnees_joueur(p : partie, j : joueur_IA):
+    # fait en sorte que les classes soient transformées en aberrations de Félix
+    oskur = ["1" if j.pieces_jouees[i] else "0" for i in range(len(j.pieces_jouees))]
+    return [p.idpartie, j.nom, j.couleur] + oskur
 
 def applique_changement(numpiece, nbrotation, rectoverso):
     piece = liste_pieces[numpiece]
