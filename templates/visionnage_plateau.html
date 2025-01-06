@@ -9,30 +9,36 @@
 
     <body>
         <h1 style="text-align: center;">Plateau de jeu</h1>
-        <table class="board">
+        <table class="board" style="border: 1px solid black;
+        padding: 15px;
+        width: 450px;
+        height: 450px;   
+        margin: auto;">
             {% for row in board %}
-            <tr class="board">
+            <tr class="board" style="border: 1px solid black;
+            width: 5%;
+            height: 5%;">
                 {% for cell in row %}
             
                 {% if cell==1 or cell=='1' %}
             
-                <td class="board" bgcolor="red"></td>
+                <td class="board" bgcolor="red" style="border: 1px solid black; width: 5%; height: 5%;"></td>
             
                 {% elif cell==2 or cell=='2'%}
             
-                <td class="board" bgcolor="blue"></td>
+                <td class="board" bgcolor="blue" style="border: 1px solid black; width: 5%; height: 5%;"></td>
             
                 {% elif cell==3 or cell=='3'%}
             
-                <td class="board" bgcolor="yellow"></td>
+                <td class="board" bgcolor="yellow" style="border: 1px solid black; width: 5%; height: 5%;"></td>
             
                 {% elif cell==4 or cell=='4'%}
             
-                <td class="board" bgcolor="green"></td>
+                <td class="board" bgcolor="green" style="border: 1px solid black; width: 5%; height: 5%;"></td>
             
                 {% else %}
             
-                <td class="board"></td>
+                <td class="board" style="border: 1px solid black; width: 5%; height: 5%;"></td>
                     {%endif%}
                 {% endfor %}
             </tr>
