@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Se Connecter</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body>
+    <div class="center">
+        <!-- Arrière-plan flouté -->
+        <div class="background-blur"></div>
+
+        <!-- Logo -->
+        <img src="../static/Blokus.webp" alt="Blokus logo" class="image_logo">
+
+        <!-- Formulaire de connexion -->
+        <div class="form-wrapper">
+            <form action="/login" method="post">
+                <label for="username">Identifiant Joueur :</label>
+                <input type="text" id="username" name="username" placeholder="Entrez votre identifiant" required>
+                
+                <label for="password">Mot de Passe :</label>
+                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+                
+                <div class="button-wrapper">
+                    <input type="submit" value="Se Connecter" class="submit-button" >
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
