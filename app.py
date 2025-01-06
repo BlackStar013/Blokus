@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, g
 import sqlite3
 from main import *
 from classes import *
+from ia import *
 from cs50 import SQL
 
 
@@ -96,6 +97,7 @@ def creerPartie():
     type2 = request.form["type2"]
     type3 = request.form["type3"]
     type4 = request.form["type4"]
+    niveau = request.form["niveau"]
     c = get_db_connection().cursor()
     c.execute("SELECT COUNT(*) FROM partie")
     nb_partie = c.fetchall()[0][0] + 1
@@ -120,8 +122,8 @@ def creerPartie():
             username4 = "ordinateur4"
             liste_joueur.append("ordinateur4")
     c = get_db_connection()
-    data = (nb_partie, 0, username1, username2, username3, username4, 0, 0, 0, 0)
-    c.execute("INSERT INTO partie VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
+    data = (nb_partie, 0, username1, username2, username3, username4, 0, 0, 0, 0, niveau)
+    c.execute("INSERT INTO partie VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
     for j in range(len(liste_joueur)):
         data2 = (nb_partie, liste_joueur[j], j+1, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False)
         c.execute("INSERT INTO partie_en_cours VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data2)
@@ -194,6 +196,12 @@ def affiche_plateau(id:str):
         passer = int(f'{truc}')
     c.close()
     #print(passer)
+    
+    c = get_db_connection().cursor()
+    c.execute("SELECT niveau FROM partie WHERE id_partie = :val", {'val':id})
+    for truc in c.fetchone():
+        niveau = int(f'{truc}')
+    c.close()
 
     donnees_joueur_actif = donnees_joueurs[tour]
     donnees_joueur_actif[0] = int(donnees_joueur_actif[0])
@@ -205,15 +213,33 @@ def affiche_plateau(id:str):
         colonne = request.form["colonne"]
         passer_tour = request.form["passer"]
     else:
-        #faire jouer l'ordi
-        passer_tour = '0'
-        numpiece = 1
-        nbrotation = 1
-        recto_verso = 0
-        ligne = 0
-        colonne = 19
-
-    if passer_tour == "0":
+        liste_classes = []
+        j1 = joueur_humain(donnees_joueurs[0][1], int(donnees_joueurs[0][2]))
+        liste_classes.append(j1)
+        if len(donnees_joueurs) == 2:
+            j2 = donnees_joueur_to_joueur(donnees_joueurs[1])
+            liste_classes.append(j2)
+            party = partie(0, j1, j2, 'Vide', 'Vide', False, len(donnees_joueurs))
+        elif len(donnees_joueurs) == 3:  
+            j2 = donnees_joueur_to_joueur(donnees_joueurs[1])
+            liste_classes.append(j2)
+            j3 = donnees_joueur_to_joueur(donnees_joueurs[2])
+            liste_classes.append(j3)
+            party = partie(0, j1, j2, j3, 'Vide', False, len(donnees_joueurs))
+        elif len(donnees_joueurs) == 4:    
+            j2 = donnees_joueur_to_joueur(donnees_joueurs[1])
+            liste_classes.append(j2)
+            j3 = donnees_joueur_to_joueur(donnees_joueurs[2])
+            liste_classes.append(j3)
+            j4 = donnees_joueur_to_joueur(donnees_joueurs[3])
+            liste_classes.append(j4)
+            party = partie(0, j1, j2, j3, j4, False, len(donnees_joueurs))
+        party.plateau = board
+        if niveau == 1:
+            numpiece, passer_tour, nbrotation, recto_verso, ligne, colonne = coup_aleatoire(party, liste_classes[tour])
+        else:
+            numpiece, passer_tour, nbrotation, recto_verso, ligne, colonne = choisir_coup_ia_alphabeta(party, liste_classes[tour], niveau-1)
+    if passer_tour == "0" or passer_tour == False:
         numpiece = int(numpiece)
         nbrotation, recto_verso = int(nbrotation), int(recto_verso)
         ligne, colonne = int(ligne), int(colonne)
@@ -244,7 +270,7 @@ def affiche_plateau(id:str):
             return render_template("menu.html", id_partie=id, board=board2 , donnees_joueurs=donnees_joueurs, tour=tour, liste_pieces=liste_pieces)
         else:
             return render_template("menu.html", id_partie=id, board=board , donnees_joueurs=donnees_joueurs, tour=tour, liste_pieces=liste_pieces)
-    elif passer_tour == "1":
+    elif passer_tour == "1" or passer_tour == True:
         passer += 1
         tour += 1
         if tour > len(donnees_joueurs)-1:
@@ -360,7 +386,7 @@ def nb_joueur2(id_partie):
     game=db.execute("SELECT * FROM partie WHERE id_partie=?", id_partie)
     nb_joueur=0
     for i in range(1, 5):     
-        if game[0]['j'+str(i)]!=None:
+        if game[0]['j'+str(i)] != 'Vide':
             nb_joueur+=1
     return nb_joueur
 
