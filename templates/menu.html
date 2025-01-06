@@ -1,23 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    <script>
-        function dragstart_handler(ev) {
-          // On ajoute l'identifiant de l'élément cible à l'objet de transfert
-          ev.dataTransfer.setData("application/my-app", ev.target.id);
-          ev.dataTransfer.dropEffect = "move";
-        }
-        function dragover_handler(ev) {
-          ev.preventDefault();
-          ev.dataTransfer.dropEffect = "move";
-        }
-        function drop_handler(ev) {
-          ev.preventDefault();
-          // On obtient l'identifiant de la cible et on ajoute l'élément déplacé
-          // au DOM de la cible
-          var data = ev.dataTransfer.getData("application/my-app");
-          ev.target.appendChild(document.getElementById(data));
-        }
-      </script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,33 +8,37 @@
 </head>
 <body>
 
-    {%for j in liste_joueur%}
-        {% for pieces in j.liste_pieces%}
+    {%for j in donnees_joueurs%}
+    {% set donnees_du_joueur = donnees_joueurs[loop.index-1] %}
+    <table>
+        <tr>
+        <td>pièces de : {{donnees_du_joueur[1]}} :</td>
+        {% for pieces in liste_pieces%}
+        <td>
         {% set idpiece = loop.index-1 %}
-            <table id="{{j.nom}}{{loop.index-1}}">
-                {% if not j.pieces_jouees[loop.index-1]%}
-                    {%for row in j.liste_pieces[loop.index-1]%}
-                        {% set ligne = loop.index-1 %}
-                        <tr id = "colonne">
+            <table id="aupif">
+                {% if donnees_du_joueur[loop.index-1+3] == '0' %}
+                <tr><p style="text-align: center;">{{idpiece}}.</p></tr>
+                {%for row in liste_pieces[loop.index-1]%}
+                    {% set ligne = loop.index-1 %}
+                        <tr>
                             {%for case in row%}
                                 {% set colonne = loop.index-1 %}
                                 {% if ligne==(row|length)//2 and colonne==(row|length)//2 %}
-                                    <td id="{{j.nom}}{{idpiece}}" draggable="true" bgcolor="pink" ondragstart="dragstart_handler(event)" height="15px" width="15px">
-                                    <button hidden>test</button>
-                                    </td>
+                                    <td id="case" bgcolor="pink"></td>
                                 {%else%}
                                     {% if case==1 %}
-                                        {%if j.couleur==1%}
+                                        {%if donnees_du_joueur[2]=='1'%}
                                             <td id="case" bgcolor="red"></td>
-                                        {%elif j.couleur==2%}
+                                        {%elif donnees_du_joueur[2]=='2'%}
                                             <td id="case" bgcolor="blue"></td>
-                                        {%elif j.couleur==3%}
+                                        {%elif donnees_du_joueur[2]=='3'%}
                                             <td id="case" bgcolor="yellow"></td>
-                                        {%elif j.couleur==4%}
+                                        {%elif donnees_du_joueur[2]=='4'%}
                                             <td id="case" bgcolor="green"></td>
                                         {%endif%}
                                     {% else %}
-                                        <td id="case" hidden></td>
+                                        <td id="case"></td>
                                     {%endif%}
                                 {%endif%}
                             {%endfor%}
@@ -60,47 +46,65 @@
                     {%endfor%}
                 {%endif%}
             </table>
+        </td>
         {%endfor%}
+        </tr>
+    </table>
     {%endfor%}
     <body>
         <div class="board"></div>
         <h1 style="text-align: center;">Plateau de jeu</h1>
+        <p style="text-align: center;"> Au tour du joueur {{donnees_joueurs[tour][1]}} de jouer</p>
         <table id = "plateau">
             {% for row in board %}
             <tr id = "ligne">
                 {% for cell in row %}
-                    {% if cell==1 %}
+                    {% if cell==1 or cell=='1' %}
                         <td id = "colonne" bgcolor="red"></td>
-                    {% elif cell==2 %}
+                    {% elif cell==2 or cell=='2'%}
                         <td id = "colonne" bgcolor="blue"></td>
-                    {% elif cell==3 %}
+                    {% elif cell==3 or cell=='3'%}
                         <td id = "colonne" bgcolor="yellow"></td>
-                    {% elif cell==4 %}
+                    {% elif cell==4 or cell=='4'%}
                         <td id = "colonne" bgcolor="green"></td>
                     {% else %}
-                        <td id = "colonne" ondrop="drop_handler(event)" ondragover="dragover_handler(event)"></td>
+                        <td id = "colonne"></td>
                     {%endif%}
                 {% endfor %}
             </tr>
             {% endfor %}
         </table>
-        <form action="/menu" method="POST">
-            <label for="joueur">Numero du joueur :</label>
-            <input type="text" id="joueur" name="joueur" placeholder="Entrez le numero du joueur" required>
-            
-            <label for="numpiece">Numero de la piece :</label>
+        <form action="/partie/{{id_partie}}" method="POST">
+            <br/>
+            <label for="numpiece">Numero de la piece entre 0 et 20 :</label>
             <input type="numpiece" id="numpiece" name="numpiece" placeholder="Entrez un numero de piece" required>
-            
+            <br/>
+            <label for="rotation">Nombre de rotation 0, 1, 2 ou 3 :</label>
+            <input type="rotation" id="rotation" name="rotation" placeholder="Entrez un nombre de rotation" required>
+            <br/>
+            <label for="rectoverso">Recto ou verso :</label>
+            <input type="rectoverso" id="rectoverso" name="rectoverso" placeholder="Entrez un nombre de recto verso" required>
+            <br/>
             <label for="ligne">Numero de la ligne :</label>
             <input type="ligne" id="ligne" name="ligne" placeholder="Entrez un numero de ligne" required>
-            
+            <br/>
             <label for="colonne">Numero de la colonne :</label>
             <input type="colonne" id="colonne" name="colonne" placeholder="Entrez un numero de colonne" required>
-            
+            <br/>
+            <label for="passer">Passer son tour</label>
+            <input type="passer" id="passer" name="passer" placeholder="Entrez 0 pour jouer le coup, et 1 pour passer" required>
+            <br/>
             <div class="button-wrapper">
                 <input type="submit" value="Jouer un coup" class="submit-button">
             </div>
-        </form>
+        </form>  
+
+        <form action="/partie/{{id_partie}}" method="POST">
+            <label for="ia">Faire jouer L'IA</label>
+            <div>
+                <input type="submit" value="Faire jouer l'IA" class="submit-button">
+            </div>
+        </form>    
     </body>   
 </body>
 </html>
