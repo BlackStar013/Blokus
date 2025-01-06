@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>FlaskBlog</title>
+</head>
+<body>
+    <div class="background-blur"></div>
+
+    <div class="center">
+        <img src="../static/Blokus.webp" alt="Blokus logo" class="image_logo">
+        <div class="bouton-center">
+            <button onclick="window.location.href='{{ url_for('page_login') }}'" class="login">Log In</button>
+            <button onclick="window.location.href='{{ url_for('page_signin') }}'" class="signin">Sign In</button>
+        </div>
+    </div>
+</body>
+</html>
