@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Compte</title>
+    <link rel="stylesheet" href="../static/css/signin.css">
+</head>
+<body>
+    <!-- Conteneur principal -->
+    <div class="center">
+        <!-- Arrière-plan flouté -->
+        <div class="background-blur"></div>
+        
+        <!-- Logo -->
+        <img src="../static/Blokus.webp" alt="Blokus logo" class="image_logo">
+        
+        <!-- Formulaire de création de compte -->
+        <div class="form-wrapper">
+            <form action="/sign_in2" method="POST">
+                <label for="username">Identifiant :</label>
+                <input type="username" id="username" name="username" placeholder="Entrez votre identifiant" required>
+                
+                <label for="password">Mot de Passe :</label>
+                <input type="password" id="password" name="password" placeholder="Entrez un mot de passe" required>
+                
+                <label for="confirm-password">Confirmer le Mot de Passe :</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmez le mot de passe" required>
+                
+                <div class="button-wrapper">
+                    <input type="submit" value="Créer un Compte" class="submit-button">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
