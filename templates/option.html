@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>FlaskBlog</title>
+</head>
+<body>
+    <!-- Conteneur pour l'arrière-plan flouté -->
+    <div class="background-blur"></div>
+
+    <!-- logo et boutons -->
+    <div class="center">
+        <img src="../static/Blokus.webp" alt="Blokus logo" class="image_logo">
+        <div class="bouton-center">
+            <button onclick="window.location.href='{{ url_for('creer') }}'" class="creer">Creer</button>
+            <button onclick="window.location.href='{{ url_for('rejoindre') }}'" class="rejoindre">Rejoindre</button>
+            <button onclick="window.location.href='{{ url_for('historique_partie') }}'" class="historique">Historique</button>
+        </div>
+    </div>
+</body>
+</html>
