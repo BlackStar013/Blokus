@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Historiques des parties
+        </title>
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    <body>
+        <img src="{{ url_for('static', filename='Blokus.webp') }}" alt="Blokus logo" class="image_logo">
+        <h2 style="font-size: 50px; text-align: center; color:rgb(11, 10, 11);"> Historique des parties</h2>
+        <hr>
+        <br><br>
+        <button class="retour" onclick="window.location.href='./menu_principal.html'">Retour</button>
+        <table class="historique_parties">
+            <tr>
+                <th>Id Partie</th>
+                <th>Date</th>
+                <th>Joueurs</th>
+                <th>Terminée</th>
+                <th>Voir la partie</th>
+            </tr>
+            {% for e in parties %}
+
+                <tr>
+                <td>{{ e['id_partie'] }}</td>
+                <td>{{ e['debut'] }}</td>
+                <td>{{ e['j1'], e['j2'], e['j3'], e['j4'] }}</td>
+                <td>
+                    {% if e['terminee'] == 0 %}
+                        Non
+                    {% else %}
+                        Oui
+                    {% endif %}
+                </td >
+                <td>
+                    <a href="{{ url_for( 'voir_partie' ,id_partie = e['id_partie'], coup=0 ) }}">Voir la partie</a>
+                </td>
+                </tr>
+            {% endfor %}
+        </table>
+        </div>
+    </body>
+</html>
+
