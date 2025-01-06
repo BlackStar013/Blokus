@@ -3,15 +3,6 @@ from main import *
 import random as rd
 import copy
 
-"""
-num pièce
-passé ?
-nb rot
-nb sym
-i
-j
-"""
-
 
 def choisir_coup_aletoire_aux(p : partie, ia : joueur_IA,) -> coup:
     # renvoie un coup aléatoire parmis ceux légaux
