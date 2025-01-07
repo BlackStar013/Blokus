@@ -37,21 +37,21 @@ Ajoutez ici une description du projet, ses objectifs, et toute autre information
 
 Listez les prérequis nécessaires pour utiliser ce projet (langages, dépendances, etc.) :
 
-- **Langage(s) :** Ex. Python 3.10
-- **Frameworks :** Ex. Flask, Django, etc.
-- **Dépendances :** Voir le fichier `requirements.txt` (si applicable).
+- **Langage(s) :**  Python, css, html, jinja
+- **Frameworks :**  Flask
+- **Dépendances :** Voir le fichier `requirements.txt`
 
 
 ## Installation
 
-Expliquez comment installer le projet sur une machine locale.
+Rentrer les commandes suivantes dans un terminal.
 
 ### Étapes générales :
 
 1. Clonez ce dépôt :
    ```bash
-   git clone https://gibson.telecomnancy.univ-lorraine.fr/projets/2425/ppii-s5/grpXX
-   cd grpXX
+   git clone https://gibson.telecomnancy.univ-lorraine.fr/projets/2425/ppii-s5/grp13
+   cd grp13
    ```
 
 2. Installez les dépendances (si applicable) :
