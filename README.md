@@ -57,6 +57,7 @@ Rentrer les commandes suivantes dans un terminal.
 2. Installez les dépendances (si applicable) :
     ```bash
     pip install -r requirements.txt
+    export FLASK_app=app.py
     ```
 
 3. Autres étapes spécifiques à votre projet.
@@ -69,7 +70,7 @@ Expliquez comment exécuter le projet.
 1. Lancer l'application :
 
     ```bash
-    python main.py
+    flask run
     ```
 
 2. Autres instructions spécifiques à votre projet.
