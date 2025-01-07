@@ -29,8 +29,8 @@ Veuillez compléter cette section avec les noms des membres du groupe :
 Ajoutez ici une description du projet, ses objectifs, et toute autre information pertinente :
 
 - **Sujet : Développement d'une application web pour le jeu Blokus avec IA** 
-- **Objectifs :**
-- **Technologies utilisées :**
+- **Objectifs : Voir le fichier charte-projet.docx**
+- **Technologies utilisées : Python, css, html, jinja, Flask**
 
 
 ## Prérequis
@@ -48,24 +48,23 @@ Rentrer les commandes suivantes dans un terminal.
 
 ### Étapes générales :
 
-1. Clonez ce dépôt :
+1. Cloner ce dépôt :
    ```bash
    git clone https://gibson.telecomnancy.univ-lorraine.fr/projets/2425/ppii-s5/grp13
    cd grp13
    ```
 
-2. Installez les dépendances (si applicable) :
+2. Installer les dépendances :
     ```bash
     pip install -r requirements.txt
+    ```
+
+3. Indiquer à Flask quel est le nom du fichier à lancer :
+    ```bash
     export FLASK_app=app.py
     ```
 
-3. Autres étapes spécifiques à votre projet.
-
-
 ## Exécution
-
-Expliquez comment exécuter le projet.
 
 1. Lancer l'application :
 
@@ -73,4 +72,4 @@ Expliquez comment exécuter le projet.
     flask run
     ```
 
-2. Autres instructions spécifiques à votre projet.
+2. Cliquer sur l'adresse indiquée.
