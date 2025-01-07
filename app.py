@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, g
 import sqlite3
 from main import *
 from classes import *
-from IA import *
+from ia import *
 from cs50 import SQL
 
 
@@ -41,13 +41,10 @@ def home_after_login():
         username = request.form['username']
         password = request.form['password']
         connection = get_db_connection().cursor()
-        connection.execute("SELECT * FROM utilisateur WHERE pseudo = :val", {'val':username})
-        content = []
-        for tpl in connection.fetchone():
-            content.append(f'{tpl}')
+        profil = connection.execute("SELECT * FROM utilisateur WHERE pseudo = :val", {'val':username}).fetchone()
         connection.close()
-        if content != []:
-            if content[0] == username and content[1] == password:
+        if profil != None:
+            if profil[0] == username and profil[1] == password:
                 return render_template('option.html')
     return render_template('login.html')
 
@@ -81,7 +78,7 @@ def rejoindrePartie():
 
 @app.route("/historique_partie")
 def historique_partie():
-    parties=db.execute("SELECT * FROM partie") #Liste de dictionnaires contenant les données relatives à une partie (joueurs, date etc...)
+    parties=db.execute("SELECT * FROM partie")
     return render_template('historique_partie.html', parties=parties)
 
 @app.route('/creer')
@@ -245,15 +242,12 @@ def affiche_plateau(id:str):
         ligne, colonne = int(ligne), int(colonne)
         piece = applique_changement(numpiece, nbrotation, recto_verso)
         if test_ajout_piece(donnees_joueur_actif, numpiece, piece, ligne, colonne, board, nb_coup, len(donnees_joueurs)):
-            #print("je joue le coup")
             board2, donnees_joueur_actif = resolution_coup(donnees_joueur_actif, numpiece, piece, ligne, colonne, board, nb_coup, len(donnees_joueurs))
             c = get_db_connection()
             grille = [id]
             for i in range(len(board2)):
                 for j in range(len(board2)):
                     grille.append(board2[i][j])
-            #print(id, liste_joueur[tour])
-            #print(donnees_joueur_actif)
             c.execute("DELETE from plateau WHERE id_partie = :val", {'val':id})
             c.execute("INSERT INTO plateau VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", grille)
             c.execute("DELETE from partie_en_cours WHERE id_partie = :val1 AND pseudo = :val2", {'val1':id, 'val2':str(liste_joueur[tour])})
@@ -279,9 +273,7 @@ def affiche_plateau(id:str):
             score = []
             for j in range(len(donnees_joueurs)):
                 score.append((donnees_joueurs[j][1], compter_points(donnees_joueurs[j])))
-            #print(score)
             gagnants = gagner(score)
-            #print(gagnants)
             c = get_db_connection()
             c.execute("UPDATE partie SET terminee = True WHERE id_partie = :val", {'val':id})
             c.commit()
