@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, g
 import sqlite3
 from main import *
 from classes import *
-from ia import *
+from IA import *
 from cs50 import SQL
 
 
