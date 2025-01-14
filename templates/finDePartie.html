@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../static/css/signin.css">
+        <title>Fin de la partie</title>
+    </head>
+    <body>
+        <div class="center">
+        <div class="form-wrapper">
+        <table>
+            {% for joueur in liste_joueur %}
+                <tr>
+                    <p style="text-align: center;">Le joueur {{liste_joueur[loop.index-1]}} a obtenu le score de {{score[loop.index-1][1]}} points.</p>
+                </tr>
+            {%endfor%}
+        </table>
+    </body>
+    <body>
+        <p>Le ou les gagants sont : {% for i in gagnants %} </p>
+            <p>{{i}}</p> 
+        {%endfor%}</p>
+        <div class="background-blur"></div>
+
+            <img src="../static/Blokus.webp" alt="Blokus logo" class="image_logo">
+            <div class="bouton-center">
+                <button onclick="window.location.href='{{ url_for('option') }}'" class="retour">Retour au choix d'action</button>    
+            </div>
+    </body>
+    </div>
+    </div>
+</html>
